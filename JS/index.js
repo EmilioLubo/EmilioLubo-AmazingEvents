@@ -1,4 +1,5 @@
 const {currentDate, events} = data
+
 const refDate = new Date(currentDate)
 
 const indexGallery = document.getElementById('indexGallery')
@@ -9,7 +10,7 @@ const pastEvents = []
 const upcomingEvents = []
 
 let evDate
-for(ev of events){
+for(let ev of events){
     evDate = new Date(ev.date)
     if(evDate >= refDate){
         upcomingEvents.push(ev)
@@ -27,7 +28,7 @@ if(indexGallery){
 }
 
 function buildGallery(array, gallery){
-    for(ev of array){
+    for(let ev of array){
         let card = document.createElement('article')
         card.className = 'card m-1'
         card.style = 'width: 18rem;'
