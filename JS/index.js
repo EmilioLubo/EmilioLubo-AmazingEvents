@@ -1,19 +1,14 @@
-const {currentDay, events} = data
-
-const refDate = new Date(currentDay)
+const {currentDate, events} = data
+const refDate = new Date(currentDate)
 
 const indexGallery = document.getElementById('indexGallery')
-
 const upcomingGallery = document.getElementById('upcomingGallery')
-
 const pastGallery = document.getElementById('pastGallery')
 
 const pastEvents = []
-
 const upcomingEvents = []
 
 let evDate
-
 for(ev of events){
     evDate = new Date(ev.date)
     if(evDate >= refDate){
@@ -22,6 +17,7 @@ for(ev of events){
         pastEvents.push(ev)
     }
 }
+
 if(indexGallery){
     buildGallery(events, indexGallery)
 } else if(pastGallery){
