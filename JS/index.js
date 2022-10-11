@@ -1,34 +1,22 @@
 const {currentDate, events} = data
 
 const refDate = new Date(currentDate)
+events.map(e => {e.date = new Date(e.date)})
 
 const indexGallery = document.getElementById('indexGallery')
 const upcomingGallery = document.getElementById('upcomingGallery')
 const pastGallery = document.getElementById('pastGallery')
 
-const pastEvents = []
-const upcomingEvents = []
 
-let evDate
-for(let ev of events){
-    evDate = new Date(ev.date)
-    if(evDate >= refDate){
-        upcomingEvents.push(ev)
-    } else{
-        pastEvents.push(ev)
-    }
-}
+const pastEvents = events.filter(e => e.date < refDate)
+const upcomingEvents = events.filter(e => e.date >= refDate)
 
-if(indexGallery){
-    buildGallery(events, indexGallery)
-} else if(pastGallery){
-    buildGallery(pastEvents, pastGallery)
-} else if(upcomingGallery){
-    buildGallery(upcomingEvents, upcomingGallery)
-}
+indexGallery ? buildGallery(events, indexGallery) : null
+pastGallery ? buildGallery(pastEvents, pastGallery) : null
+upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
 
 function buildGallery(array, gallery){
-    for(let ev of array){
+    array.forEach(ev => {
         let card = document.createElement('article')
         card.className = 'card m-1'
         card.style = 'width: 18rem;'
@@ -42,5 +30,5 @@ function buildGallery(array, gallery){
                                 <a href="#" class="btn bg-dark text-light">view details...</a>
                             </div>`
         gallery.appendChild(card)
-    }
+    })
 }
