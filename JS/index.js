@@ -2,14 +2,21 @@ const {currentDate, events} = data
 
 const refDate = new Date(currentDate)
 events.map(e => {e.date = new Date(e.date)})
+const pastEvents = events.filter(e => e.date < refDate)
+const upcomingEvents = events.filter(e => e.date >= refDate)
+const categories = new Set(events.map(e => e.category).sort())
 
 const indexGallery = document.getElementById('indexGallery')
 const upcomingGallery = document.getElementById('upcomingGallery')
 const pastGallery = document.getElementById('pastGallery')
+const categoryContainer = document.getElementById('categoryContainer')
 
-
-const pastEvents = events.filter(e => e.date < refDate)
-const upcomingEvents = events.filter(e => e.date >= refDate)
+categories.forEach(e => {
+    let label = document.createElement('label')
+    label.className = "form-check-label"
+    label.innerHTML = `<input class="form-check-input" type="checkbox" value="">${e}`
+    categoryContainer.appendChild(label)
+})
 
 indexGallery ? buildGallery(events, indexGallery) : null
 pastGallery ? buildGallery(pastEvents, pastGallery) : null
