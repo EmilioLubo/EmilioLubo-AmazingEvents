@@ -17,7 +17,9 @@ categories.forEach(e => {
     label.innerHTML = `<input class="form-check-input" type="checkbox" value="">${e}`
     categoryContainer.appendChild(label)
 })
-
+filterGallery(events, indexGallery)
+filterGallery(pastEvents, pastGallery)
+filterGallery(upcomingEvents, upcomingGallery)
 indexGallery ? buildGallery(events, indexGallery) : null
 pastGallery ? buildGallery(pastEvents, pastGallery) : null
 upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
@@ -27,15 +29,31 @@ function buildGallery(array, gallery){
         let card = document.createElement('article')
         card.className = 'card m-1'
         card.style = 'width: 18rem;'
-        card.innerHTML = `  <img src="${ev.image}" class="card-img-top card__img mt-2" alt="Event image">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">${ev.name}</h5>
-                                <p class="card-text text-center">${ev.description}</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <p>Price: $ ${ev.price}</p>
-                                <a href="#" class="btn bg-dark text-light">view details...</a>
-                            </div>`
+        card.innerHTML = 
+        `<img src="${ev.image}" class="card-img-top card__img mt-2" alt="Event image">
+        <div class="card-body">
+        <h5 class="card-title text-center">${ev.name}</h5>
+        <p class="card-text text-center">${ev.description}</p>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+        <p>Price: $ ${ev.price}</p>
+        <a href="#" class="btn bg-dark text-light">view details...</a>
+        </div>`
         gallery.appendChild(card)
     })
+}
+function filterGallery(array, gallery){
+const checkbox = document.querySelectorAll('.form-check-input')
+let filtered = []
+checkbox.forEach(el => el.addEventListener('change', (e) =>{
+    gallery.innerHTML = ""
+    const selected = e.target.parentNode.innerText
+    filtered = filtered.concat(array.filter(el => el.category === selected))
+    if(e.target.checked){
+        buildGallery(filtered, gallery)
+    } else{
+        filtered = filtered.filter(el => el.category !== selected)
+        filtered.length > 0 ? buildGallery(filtered, gallery) : buildGallery(array, gallery)
+    }
+}))
 }
