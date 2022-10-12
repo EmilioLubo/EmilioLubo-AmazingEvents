@@ -1,1 +1,1 @@
-# JS Amazing Events
+# JS / Amazing Events

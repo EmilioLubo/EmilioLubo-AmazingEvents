@@ -1,0 +1,127 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Chakra Petch', sans-serif;
+}
+.logo{
+    width: 20rem;
+}
+.nav-link{
+    text-align: center;
+}
+.nav-link:hover{
+    color: #D90868 !important;
+}
+.nav-link:active{
+    color: black !important;
+    text-shadow: 1px 1px #D90868;
+}
+.active{
+    text-decoration: underline;
+}
+header{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(217,8,104,1) 100%, rgba(0,212,255,1) 100%);
+    height: 10vh;
+}
+label{
+    font-size: .9em;
+}
+.search__btn{
+    border: double #D90868;
+    border-radius: 25%;
+}
+.search__btn:hover{
+    box-shadow: 0px 0px 1px 1px black;
+}
+.search__btn:active{
+    border-color: whitesmoke;
+}
+hr{
+    background-color: #D90868;
+}
+.card{
+    border: double #D90868;
+    border-radius: 5%;
+}
+.card__img{
+    box-shadow: 0px 0px 3px 3px black;
+    height: 150px;
+    object-fit: cover;
+}
+.btn{
+    border: double #D90868;
+    border-radius: 10%;
+    padding: .2rem;
+}
+.btn:hover{
+    color: #D90868 !important;
+}
+.btn:active{
+    box-shadow: 0px 0px 1px 1px black;
+    color: whitesmoke !important;
+}
+.data__form{
+    width: 50%;
+}
+.form__input{
+    font-size: 1.2em;
+    border: solid #D90868;
+    border-radius: 5%;
+    box-shadow: 1px 1px black;
+}
+.submit__btn{
+    width: 10rem;
+    border: double #D90868;
+    border-radius: 5%;
+}
+.submit__btn:hover{
+    background-color: black;
+    color: whitesmoke;
+}
+.submit__btn:active{
+    color: #D90868;
+}
+.table__section, .contact__section, .details__section{
+    min-height: 65vh;
+}
+.body__details{
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(199,6,95,1) 100%, rgba(0,212,255,1) 100%);
+}
+.detail__img{
+    width: 100%;
+}
+table{
+    border-color: #D90868 !important;
+}
+footer{
+    border-top: double #D90868;
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(199,6,95,1) 100%, rgba(0,212,255,1) 100%);
+}
+ul{
+    list-style: none;
+}
+.footer__logo{
+    width: 3rem;
+    border: double #D90868;
+    border-radius: 50%;
+}
+.footer__logo:hover{
+    border-color: whitesmoke;
+}
+.footer__logo:active{
+    border-color: #D90868;
+}
+@media screen and (max-width: 320px){
+    .logo{
+        width: 5rem;
+    }
+}
+@media screen and (max-width: 768px){
+    .data__form{
+        width: 80%;
+    }
+}
