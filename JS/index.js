@@ -1,30 +1,31 @@
 const {currentDate, events} = data
-
+events.map(e => e.date = new Date(e.date))
 const refDate = new Date(currentDate)
-events.map(e => {e.date = new Date(e.date)})
 const pastEvents = events.filter(e => e.date < refDate)
 const upcomingEvents = events.filter(e => e.date >= refDate)
 const categories = new Set(events.map(e => e.category).sort())
-
 const indexGallery = document.getElementById('indexGallery')
 const upcomingGallery = document.getElementById('upcomingGallery')
 const pastGallery = document.getElementById('pastGallery')
 const categoryContainer = document.getElementById('categoryContainer')
-
 categories.forEach(e => {
     let label = document.createElement('label')
     label.className = "form-check-label"
-    label.innerHTML = `<input class="form-check-input" type="checkbox" value="">${e}`
+    label.innerHTML = `<input class="form-check-input" type="checkbox" value="${e}">${e}`
     categoryContainer.appendChild(label)
 })
-filterGallery(events, indexGallery)
-filterGallery(pastEvents, pastGallery)
-filterGallery(upcomingEvents, upcomingGallery)
+const checkbox = document.querySelectorAll('.form-check-input')
+const search = document.getElementById('search')
+let applied = {}
+let checkedCat = []
 indexGallery ? buildGallery(events, indexGallery) : null
+indexGallery ? filterGallery(events, indexGallery) : null
 pastGallery ? buildGallery(pastEvents, pastGallery) : null
+pastGallery ? filterGallery(pastEvents, pastGallery) : null
 upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
-
+upcomingGallery ? filterGallery(upcomingEvents, upcomingGallery) : null
 function buildGallery(array, gallery){
+    gallery.innerHTML = ""
     array.forEach(ev => {
         let card = document.createElement('article')
         card.className = 'card m-1'
@@ -43,17 +44,42 @@ function buildGallery(array, gallery){
     })
 }
 function filterGallery(array, gallery){
-const checkbox = document.querySelectorAll('.form-check-input')
-let filtered = []
-checkbox.forEach(el => el.addEventListener('change', (e) =>{
-    gallery.innerHTML = ""
-    const selected = e.target.parentNode.innerText
-    filtered = filtered.concat(array.filter(el => el.category === selected))
-    if(e.target.checked){
-        buildGallery(filtered, gallery)
-    } else{
-        filtered = filtered.filter(el => el.category !== selected)
-        filtered.length > 0 ? buildGallery(filtered, gallery) : buildGallery(array, gallery)
+    checkbox.forEach(el => el.addEventListener('change', e => {
+        const selected = e.target.value.toLowerCase()
+        const checked = e.target.checked
+        filterEvents = new Set(filterManager(array, 'isChecked', selected, checked))
+        buildGallery(filterEvents, gallery)
+    }))
+    search.addEventListener('click', e => {
+        e.preventDefault()
+        const searched = e.target.parentNode.children[0].value
+        filterEvents = filterManager(array, 'isSearched', searched)
+        buildGallery(filterEvents, gallery)
+    })
+}
+function filterManager(array, action, value, checkState){
+    if(checkState){
+        checkedCat.push(value)
+    }else{
+        checkedCat = checkedCat.filter(cat => cat !== value)
     }
-}))
+    filterEvents = array.slice()
+    applied[action] = value.toLowerCase()
+    for(let name in applied){
+        if(name === 'isChecked' && checkedCat.length > 1){
+            let auxArray = []
+            new Set(checkedCat)
+            checkedCat.forEach(cat => {
+                auxArray = auxArray.concat(filterEvents.filter(ev => ev.category.toLowerCase().includes(cat)))
+            })
+            console.log(filterEvents)
+            filterEvents = auxArray
+        } else if(name === 'isChecked' && checkedCat.length === 1){
+            filterEvents = filterEvents.filter(ev => ev.category.toLowerCase().includes(checkedCat[0]))
+        }
+        if(name === 'isSearched' && applied[name].length > 0){
+            filterEvents = filterEvents.filter(ev => ev.name.toLowerCase().includes(applied[name].toLowerCase()))
+        }
+    }
+    return filterEvents
 }

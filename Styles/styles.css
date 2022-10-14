@@ -32,6 +32,11 @@ label{
     max-height: 3rem;
 }
 .search__btn{
+    background-image: url('../Assets/search-3-32.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    min-width: 3rem;
     border: double #D90868;
     border-radius: 25%;
 }
