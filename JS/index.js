@@ -1,5 +1,5 @@
 const {currentDate, events} = data
-events.map(e => e.date = new Date(e.date))
+events.forEach(e => e.date = new Date(e.date))
 const refDate = new Date(currentDate)
 const pastEvents = events.filter(e => e.date < refDate)
 const upcomingEvents = events.filter(e => e.date >= refDate)
@@ -8,6 +8,9 @@ const indexGallery = document.getElementById('indexGallery')
 const upcomingGallery = document.getElementById('upcomingGallery')
 const pastGallery = document.getElementById('pastGallery')
 const categoryContainer = document.getElementById('categoryContainer')
+let filterEvents
+let applied = {}
+let checkedCat = []
 categories.forEach(e => {
     let label = document.createElement('label')
     label.className = "form-check-label"
@@ -16,8 +19,6 @@ categories.forEach(e => {
 })
 const checkbox = document.querySelectorAll('.form-check-input')
 const search = document.getElementById('search')
-let applied = {}
-let checkedCat = []
 indexGallery ? buildGallery(events, indexGallery) : null
 indexGallery ? filterGallery(events, indexGallery) : null
 pastGallery ? buildGallery(pastEvents, pastGallery) : null
@@ -48,31 +49,23 @@ function filterGallery(array, gallery){
         const selected = e.target.value.toLowerCase()
         const checked = e.target.checked
         filterEvents = new Set(filterManager(array, 'isChecked', selected, checked))
-        buildGallery(filterEvents, gallery)
+        filterEvents.size === 0 ? gallery.innerHTML = `<h4 class="text-center text-light">No events match search</h4>` : buildGallery(filterEvents, gallery)
     }))
     search.addEventListener('click', e => {
         e.preventDefault()
         const searched = e.target.parentNode.children[0].value
         filterEvents = filterManager(array, 'isSearched', searched)
-        buildGallery(filterEvents, gallery)
+        filterEvents.length === 0 ? gallery.innerHTML = `<h4 class="text-center text-light">No events match search</h4>` : buildGallery(filterEvents, gallery)
     })
 }
 function filterManager(array, action, value, checkState){
-    if(checkState){
-        checkedCat.push(value)
-    }else{
-        checkedCat = checkedCat.filter(cat => cat !== value)
-    }
+    checkState ? checkedCat.push(value) : checkedCat = checkedCat.filter(cat => cat !== value)
     filterEvents = array.slice()
     applied[action] = value.toLowerCase()
     for(let name in applied){
         if(name === 'isChecked' && checkedCat.length > 1){
             let auxArray = []
-            new Set(checkedCat)
-            checkedCat.forEach(cat => {
-                auxArray = auxArray.concat(filterEvents.filter(ev => ev.category.toLowerCase().includes(cat)))
-            })
-            console.log(filterEvents)
+            checkedCat.forEach(cat => auxArray = auxArray.concat(filterEvents.filter(ev => ev.category.toLowerCase().includes(cat))))
             filterEvents = auxArray
         } else if(name === 'isChecked' && checkedCat.length === 1){
             filterEvents = filterEvents.filter(ev => ev.category.toLowerCase().includes(checkedCat[0]))
