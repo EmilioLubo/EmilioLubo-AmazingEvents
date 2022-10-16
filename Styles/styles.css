@@ -101,6 +101,22 @@ hr{
 .detail__img{
     width: 100%;
 }
+.details__close{
+    width: 4rem;
+    font-size: 3em;
+    text-align: center;
+    border: double #D90868;
+    border-radius: 50%;
+}
+.details__close:hover{
+    color: #D90868;
+    border-color: whitesmoke;
+    box-shadow: 1px 1px #D90868;
+    pointer-events: stroke;
+}
+.details__close:active{
+    color: whitesmoke;
+}
 table{
     border-color: #D90868 !important;
 }
