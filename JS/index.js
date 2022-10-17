@@ -64,12 +64,10 @@ function filterManager(array, action, value, checkState){
     filterEvents = array.slice()
     applied[action] = value.toLowerCase()
     for(let name in applied){
-        if(name === 'isChecked' && checkedCat.length > 1){
+        if(name === 'isChecked' && checkedCat.length > 0){
             let auxArray = []
             checkedCat.forEach(cat => auxArray = auxArray.concat(filterEvents.filter(ev => ev.category.toLowerCase().includes(cat))))
             filterEvents = auxArray
-        } else if(name === 'isChecked' && checkedCat.length === 1){
-            filterEvents = filterEvents.filter(ev => ev.category.toLowerCase().includes(checkedCat[0]))
         }
         if(name === 'isSearched' && applied[name].length > 0){
             filterEvents = filterEvents.filter(ev => ev.name.toLowerCase().includes(applied[name].toLowerCase()))

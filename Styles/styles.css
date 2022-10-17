@@ -5,7 +5,7 @@
     font-family: 'Chakra Petch', sans-serif;
 }
 .logo{
-    width: 20rem;
+    width: 10rem;
 }
 .nav-link{
     text-align: center;
@@ -48,6 +48,9 @@ label{
 }
 hr{
     background-color: #D90868;
+}
+main{
+    min-height: 55vh;
 }
 .card{
     border: double #D90868;
