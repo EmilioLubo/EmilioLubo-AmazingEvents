@@ -32,8 +32,8 @@ container.innerHTML = `<div class="card ms-lg-5 me-lg-5 text-dark">
                         <dd>${anEvent.place}</dd>
                         <dt>Capacity:</dt>
                         <dd>${anEvent.capacity}</dd>
-                        <dt>Assistance</dt>
-                        <dd>${anEvent.assistance}</dd>
+                        <dt>Assistance:</dt>
+                        <dd>${anEvent.assistance || anEvent.estimate + '(estimated)'}</dd>
                         <dt>Price</dt>
                         <dd>$ ${anEvent.price}</dd>
                     </dl>
