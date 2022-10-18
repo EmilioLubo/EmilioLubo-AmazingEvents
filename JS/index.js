@@ -25,7 +25,7 @@ pastGallery ? buildGallery(pastEvents, pastGallery) : null
 pastGallery ? filterGallery(pastEvents, pastGallery) : null
 upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
 upcomingGallery ? filterGallery(upcomingEvents, upcomingGallery) : null
-function buildGallery(array, gallery){
+function buildGallery(array, gallery, ruta){
     gallery.innerHTML = ""
     array.forEach(ev => {
         let card = document.createElement('article')
@@ -39,7 +39,9 @@ function buildGallery(array, gallery){
         </div>
         <div class="d-flex justify-content-between align-items-baseline">
         <p>Price: $ ${ev.price}</p>
-        <a href="#" class="btn bg-dark text-light">view details...</a>
+        <a href="${
+            location.pathname === '/index.html' ? './pages' : '.'}/details.html?id=${ev._id}" 
+            class="btn details__button bg-dark text-light">view details...</a>
         </div>`
         gallery.appendChild(card)
     })
@@ -48,8 +50,8 @@ function filterGallery(array, gallery){
     checkbox.forEach(el => el.addEventListener('change', e => {
         const selected = e.target.value.toLowerCase()
         const checked = e.target.checked
-        filterEvents = new Set(filterManager(array, 'isChecked', selected, checked))
-        filterEvents.size === 0 ? gallery.innerHTML = `<h4 class="text-center text-light">No events match search</h4>` : buildGallery(filterEvents, gallery)
+        filterEvents = new filterManager(array, 'isChecked', selected, checked)
+        filterEvents.length === 0 ? gallery.innerHTML = `<h4 class="text-center text-light">No events match search</h4>` : buildGallery(filterEvents, gallery)
     }))
     search.addEventListener('click', e => {
         e.preventDefault()
@@ -63,12 +65,10 @@ function filterManager(array, action, value, checkState){
     filterEvents = array.slice()
     applied[action] = value.toLowerCase()
     for(let name in applied){
-        if(name === 'isChecked' && checkedCat.length > 1){
+        if(name === 'isChecked' && checkedCat.length > 0){
             let auxArray = []
             checkedCat.forEach(cat => auxArray = auxArray.concat(filterEvents.filter(ev => ev.category.toLowerCase().includes(cat))))
             filterEvents = auxArray
-        } else if(name === 'isChecked' && checkedCat.length === 1){
-            filterEvents = filterEvents.filter(ev => ev.category.toLowerCase().includes(checkedCat[0]))
         }
         if(name === 'isSearched' && applied[name].length > 0){
             filterEvents = filterEvents.filter(ev => ev.name.toLowerCase().includes(applied[name].toLowerCase()))
