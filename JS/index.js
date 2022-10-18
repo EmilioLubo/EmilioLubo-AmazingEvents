@@ -25,7 +25,7 @@ pastGallery ? buildGallery(pastEvents, pastGallery) : null
 pastGallery ? filterGallery(pastEvents, pastGallery) : null
 upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
 upcomingGallery ? filterGallery(upcomingEvents, upcomingGallery) : null
-function buildGallery(array, gallery){
+function buildGallery(array, gallery, ruta){
     gallery.innerHTML = ""
     array.forEach(ev => {
         let card = document.createElement('article')
@@ -39,11 +39,12 @@ function buildGallery(array, gallery){
         </div>
         <div class="d-flex justify-content-between align-items-baseline">
         <p>Price: $ ${ev.price}</p>
-        <button id="${ev._id}" class="btn details__button bg-dark text-light">view details...</button>
+        <a href="${
+            location.pathname === '/index.html' ? './pages' : '.'}/details.html?id=${ev._id}" 
+            class="btn details__button bg-dark text-light">view details...</a>
         </div>`
         gallery.appendChild(card)
     })
-    renderDetails(array, gallery)
 }
 function filterGallery(array, gallery){
     checkbox.forEach(el => el.addEventListener('change', e => {
@@ -74,52 +75,4 @@ function filterManager(array, action, value, checkState){
         }
     }
     return filterEvents
-}
-function renderDetails(array, gallery){
-    let detailsButtons = document.querySelectorAll('.details__button')
-    detailsButtons.forEach(el => el.addEventListener('click', e => {
-        let cardId = e.target.id
-        let eventDetail = array.filter(ev => ev._id === parseInt(cardId))
-        gallery.innerHTML = 
-        `<div class="card ms-lg-5 me-lg-5 bg-dark text-light mt-5 mb-3" style="max-width: 80rem;">
-         <div class="row g-0">
-            <div class="col-md-6 align-self-center p-3">
-                <img src="${eventDetail[0].image}" class="img-fluid rounded-start detail__img"
-                    alt="product image">
-            </div>
-            <div class="col-md-6 p-3 d-flex flex-column align-items-center">
-                <div class="card-body">
-                    <h5 class="card-title text-center mb-3">${eventDetail[0].name}</h5>
-                    <div class="row justify-content-center">
-                        <div class="col">
-                            <dl>
-                                <dt>Date:</dt>
-                                <dd>${eventDetail[0].date.toLocaleDateString()}</dd>
-                                <dt>Description:</dt>
-                                <dd>${eventDetail[0].description}</dd>
-                                <dt>Category:</dt>
-                                <dd>${eventDetail[0].category}</dd>
-                            </dl>
-                        </div>
-                        <div class="col">
-                            <dl>
-                                <dt>Place:</dt>
-                                <dd>${eventDetail[0].place}</dd>
-                                <dt>Capacity:</dt>
-                                <dd>${eventDetail[0].capacity}</dd>
-                                <dt>Assistance</dt>
-                                <dd>${eventDetail[0].assistance}</dd>
-                                <dt>Price</dt>
-                                <dd>$ ${eventDetail[0].price}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
-                <button class="bg-transparent details__close">X</button>
-            </div>
-        </div>
-    </div>`
-    let closeDetails = document.querySelectorAll('.details__close')
-    closeDetails.forEach(el=> el.addEventListener('click', () => buildGallery(array, gallery)))
-    }))
 }
