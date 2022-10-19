@@ -25,7 +25,7 @@ pastGallery ? buildGallery(pastEvents, pastGallery) : null
 pastGallery ? filterGallery(pastEvents, pastGallery) : null
 upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
 upcomingGallery ? filterGallery(upcomingEvents, upcomingGallery) : null
-function buildGallery(array, gallery, ruta){
+function buildGallery(array, gallery){
     gallery.innerHTML = ""
     array.forEach(ev => {
         let card = document.createElement('article')
