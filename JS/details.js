@@ -3,7 +3,7 @@ events.forEach(e => e.date = new Date(e.date))
 const refDate = new Date(currentDate)
 const detailsContainer = document.getElementById('detailsContainer')
 const detailId = location.search.slice(4)
-const detailEvent = events.filter(ev => ev._id == detailId)[0]
+const detailEvent = events.find(ev => ev._id == detailId)
 buildDetails(detailEvent, detailsContainer)
 function buildDetails(anEvent, container){
 container.innerHTML = `<div class="card ms-lg-5 me-lg-5 text-dark">
