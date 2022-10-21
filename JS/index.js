@@ -26,6 +26,7 @@ pastGallery ? filterGallery(pastEvents, pastGallery) : null
 upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
 upcomingGallery ? filterGallery(upcomingEvents, upcomingGallery) : null
 function buildGallery(array, gallery){
+    const href = location.href
     gallery.innerHTML = ""
     array.forEach(ev => {
         let card = document.createElement('article')
@@ -39,7 +40,7 @@ function buildGallery(array, gallery){
         </div>
         <div class="d-flex justify-content-between align-items-baseline">
         <p>Price: $ ${ev.price}</p>
-        <a href="${location.href}/pages/details.html?id=${ev._id}" 
+        <a href="${href}/pages/details.html?id=${ev._id}" 
             class="btn details__button bg-dark text-light">view details...</a>
         </div>`
         gallery.appendChild(card)
