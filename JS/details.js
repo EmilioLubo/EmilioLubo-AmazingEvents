@@ -1,10 +1,16 @@
-const{currentDate, events} = data
-events.forEach(e => e.date = new Date(e.date))
-const refDate = new Date(currentDate)
 const detailsContainer = document.getElementById('detailsContainer')
 const detailId = location.search.slice(4)
-const detailEvent = events.find(ev => ev._id == detailId)
-buildDetails(detailEvent, detailsContainer)
+getDetailsData(detailId)
+async function getDetailsData(id){
+    try{
+        const res = await fetch(`https://mind-hub.up.railway.app/amazing/${id}`)
+        const {event} = await res.json()
+        event.date = new Date(event.date)
+        buildDetails(event, detailsContainer)
+    } catch(err){
+        console.log(`Error. ${err}`)
+    }
+}
 function buildDetails(anEvent, container){
 container.innerHTML = `<div class="card ms-lg-5 me-lg-5 text-dark">
 <div class="row g-0">
@@ -19,7 +25,7 @@ container.innerHTML = `<div class="card ms-lg-5 me-lg-5 text-dark">
                 <div class="col">
                     <dl>
                         <dt>Date:</dt>
-                        <dd>${anEvent.date.toDateString()}</dd>
+                        <dd>${anEvent.date.toLocaleString()}</dd>
                         <dt>Description:</dt>
                         <dd>${anEvent.description}</dd>
                         <dt>Category:</dt>
