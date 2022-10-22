@@ -21,7 +21,6 @@ async function getStatsData(){
     } catch(err){
         console.log(`Error. ${err}`)
     }
-
 }
 async function getStatsCatData(query, attendance, table){
     try{
