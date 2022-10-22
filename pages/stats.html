@@ -55,38 +55,38 @@
     <div class="row ps-1 pe-1 mt-3">
       <h3 class="text-light text-center">Events statistics</h3>
       <table class="table table-bordered table-hover table-dark mb-5">
-        <thead>
-          <tr class="text-center">
-            <th>Events with de highest percentage of attendance</th>
-            <th>Events with the lowest percentage of attendance</th>
-            <th>Events with larger capacity</th>
+        <thead class="text-center">
+          <tr>
+            <th class="table__col" scope="col">EVENT WITH THE HIGHEST PERCENTAGE OF ATTENDANCE</th>
+            <th class="table__col" scope="col">EVENT WITH THE LOWEST PERCENTAGE OF ATTENDANCE</th>
+            <th class="table__col" scope="col">EVENT WITH LARGER CAPACITY</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="statsTable">
         </tbody>
       </table>
       <h3 class="text-light text-center">Upcoming events statistics by category</h3>
       <table class="table table-bordered table-hover table-dark mb-5">
         <thead class="text-center">
           <tr>
-            <th>Categories</th>
-            <th>Revenues</th>
-            <th>Percentage of attendance</th>
+            <th class="table__col" scope="col">CATEGORIES</th>
+            <th class="table__col" scope="col">REVENUES (ESTIMATE)</th>
+            <th class="table__col" scope="col">PERCENTAGE OF ATTENDANCE (ESTIMATE)</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="upcomingTable">
         </tbody>
       </table>
       <h3 class="text-light text-center">Past events statistics by category</h3>
       <table class="table table-bordered table-hover table-dark mb-5">
         <thead class="text-center">
           <tr>
-            <th>Categories</th>
-            <th>Revenues</th>
-            <th>Percentage of attendance</th>
+            <th class="table__col" scope="col">CATEGORIES</th>
+            <th class="table__col" scope="col">REVENUES</th>
+            <th class="table__col" scope="col">PERCENTAGE OF ATTENDANCE</th>
           </tr>
         </thead>
-        <tbody> table-hover
+        <tbody id="pastTable">
         </tbody>
       </table>
     </div>
@@ -113,6 +113,7 @@
       <h2 class="col text-light text-center p-5">Cohort 35/36</h2>
     </div>
   </footer>
+  <script src="../JS/stats.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
   </script>
