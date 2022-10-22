@@ -1,9 +1,6 @@
 const indexGallery = document.getElementById('indexGallery')
 const upcomingGallery = document.getElementById('upcomingGallery')
 const pastGallery = document.getElementById('pastGallery')
-getCategoriesData()
-const checkbox = document.querySelectorAll('.form-check-input')
-const search = document.getElementById('search')
 let filterEvents
 let applied = {}
 let checkedCat = []
@@ -35,6 +32,7 @@ async function getData(query, gallery){
     try{
         const res = await fetch(`https://mind-hub.up.railway.app/amazing?${query}`)
         const {events} = await res.json()
+        await getCategoriesData()
         buildGallery(events, gallery)
         filterGallery(events, gallery)
     } catch(err){
@@ -56,12 +54,14 @@ function buildGallery(array, gallery){
         <div class="d-flex justify-content-between align-items-baseline">
         <p>Price: $ ${ev.price}</p>
         <a href="${(location.pathname.split('/').pop()) === 'index.html' ? './pages/details.html?id=' : './details.html?id='}${ev.id}" 
-            class="btn details__button bg-dark text-light">view details...</a>
+        class="btn details__button bg-dark text-light">view details...</a>
         </div>`
         gallery.appendChild(card)
     })
 }
 function filterGallery(array, gallery){
+    const checkbox = document.querySelectorAll('.form-check-input')
+    const search = document.getElementById('search')
     checkbox.forEach(el => el.addEventListener('change', e => {
         const selected = e.target.value.toLowerCase()
         const checked = e.target.checked

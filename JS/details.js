@@ -1,4 +1,3 @@
-const detailsContainer = document.getElementById('detailsContainer')
 const detailId = location.search.slice(4)
 getDetailsData(detailId)
 async function getDetailsData(id){
@@ -6,6 +5,7 @@ async function getDetailsData(id){
         const res = await fetch(`https://mind-hub.up.railway.app/amazing/${id}`)
         const {event} = await res.json()
         event.date = new Date(event.date)
+        const detailsContainer = document.getElementById('detailsContainer')
         buildDetails(event, detailsContainer)
     } catch(err){
         console.log(`Error. ${err}`)

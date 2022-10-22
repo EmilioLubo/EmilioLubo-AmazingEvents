@@ -1,10 +1,10 @@
 const statsTable = document.getElementById('statsTable')
 const upcomingTable = document.getElementById('upcomingTable')
 const pastTable = document.getElementById('pastTable')
-getStatsData()
+getStatsData(statsTable)
 getStatsCatData('upcoming', 'estimate', upcomingTable)
 getStatsCatData('past', 'assistance', pastTable)
-async function getStatsData(){
+async function getStatsData(table){
     try{
         const res = await fetch(`https://mind-hub.up.railway.app/amazing?time=past`)
         const {events} = await res.json()
@@ -12,7 +12,7 @@ async function getStatsData(){
         const highPerc = events.sort((ev1, ev2) => ev2.perOfAtt - ev1.perOfAtt)[0]
         const lowPerc = events[events.length - 1]
         const highCapacity = events.sort((ev1, ev2) => ev2.capacity - ev1.capacity)[0]
-        statsTable.innerHTML += 
+        table.innerHTML += 
                                 `<tr class="text-center">
                                     <td>${highPerc.name} (${highPerc.perOfAtt} %)</td>
                                     <td>${lowPerc.name} (${lowPerc.perOfAtt} %)</td>
