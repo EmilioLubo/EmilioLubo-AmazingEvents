@@ -4,7 +4,7 @@ const pastGallery = document.getElementById('pastGallery')
 let filterEvents
 let applied = {}
 let checkedCat = []
-switch(location.pathname){
+switch(location.pathname.split('/').pop()){
     case '/index.html': getData('',indexGallery)
     break
     case '/pages/upcoming.html': getData('time=upcoming&order=asc', upcomingGallery)
