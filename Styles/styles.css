@@ -125,9 +125,6 @@ main{
 table{
     border-color: #D90868 !important;
 }
-.table__col{
-    width: 33%;
-}
 footer{
     border-top: double #D90868;
     background: rgb(2,0,36);
