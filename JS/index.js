@@ -13,6 +13,8 @@ async function app(gallery1, gallery2, gallery3){
     break
     case 'past.html': await getData('time=past&order=desc', gallery3)
     break
+    default: await getData('', gallery1)
+    break
 }
 }
 async function getCategoriesData(){
