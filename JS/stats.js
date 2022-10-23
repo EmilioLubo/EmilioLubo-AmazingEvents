@@ -3,9 +3,13 @@ const upcomingTable = document.getElementById('upcomingTable')
 const pastTable = document.getElementById('pastTable')
 tableApp(statsTable, upcomingTable, pastTable)
 async function tableApp(table1, table2, table3){
-    await getStatsData(table1)
-    await getStatsCatData('upcoming', 'estimate', table2)
-    await getStatsCatData('past', 'assistance', table3)
+    try{
+        await getStatsData(table1)
+        await getStatsCatData('upcoming', 'estimate', table2)
+        await getStatsCatData('past', 'assistance', table3)
+    } catch(err){
+        console.log(`Error. ${err}`)
+    }
 }
 async function getStatsData(table){
     try{
