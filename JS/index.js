@@ -56,7 +56,7 @@ function buildGallery(array, gallery){
         </div>
         <div class="d-flex justify-content-between align-items-baseline">
         <p>Price: $ ${ev.price}</p>
-        <a href="${(location.pathname.split('/').pop()) === 'index.html' ? './pages/details.html?id=' : './details.html?id='}${ev.id}" 
+        <a href="${document.title === 'Amazing Events - Home' ? './pages/details.html?id=' : './details.html?id='}${ev.id}" 
         class="btn details__button bg-dark text-light">view details...</a>
         </div>`
         gallery.appendChild(card)
