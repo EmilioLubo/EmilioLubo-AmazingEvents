@@ -4,13 +4,16 @@ const pastGallery = document.getElementById('pastGallery')
 let filterEvents
 let applied = {}
 let checkedCat = []
-switch(location.pathname.split('/').pop()){
-    case 'index.html': getData('',indexGallery)
+app()
+async function app(){
+    switch(location.pathname.split('/').pop()){
+    case 'index.html': await getData('',indexGallery)
     break
-    case 'upcoming.html': getData('time=upcoming&order=asc', upcomingGallery)
+    case 'upcoming.html': await getData('time=upcoming&order=asc', upcomingGallery)
     break
-    case 'past.html': getData('time=past&order=desc', pastGallery)
+    case 'past.html': await getData('time=past&order=desc', pastGallery)
     break
+}
 }
 async function getCategoriesData(){
     try{
