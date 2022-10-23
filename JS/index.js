@@ -6,14 +6,12 @@ let applied = {}
 let checkedCat = []
 app(indexGallery, upcomingGallery, pastGallery)
 async function app(gallery1, gallery2, gallery3){
-    switch(location.pathname.split('/').pop()){
-    case 'index.html': await getData('', gallery1)
+    switch(document.title){
+    case 'Amazing Events - Home': await getData('', gallery1)
     break
-    case 'upcoming.html': await getData('time=upcoming&order=asc', gallery2)
+    case 'Amazing Events - Upcoming Events': await getData('time=upcoming&order=asc', gallery2)
     break
-    case 'past.html': await getData('time=past&order=desc', gallery3)
-    break
-    default: await getData('', gallery1)
+    case 'Amazing Events - Past Events': await getData('time=past&order=desc', gallery3)
     break
 }
 }
