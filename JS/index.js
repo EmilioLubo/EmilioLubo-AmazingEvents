@@ -19,6 +19,17 @@ async function app(gallery1, gallery2, gallery3){
         console.log(`Error. ${err}`)
     }
 }
+async function getData(query, gallery){
+    try{
+        const res = await fetch(`https://mind-hub.up.railway.app/amazing?${query}`)
+        const {events} = await res.json()
+        await getCategoriesData()
+        buildGallery(events, gallery)
+        filterGallery(events, gallery)
+    } catch(err){
+        console.log(`Error. ${err}`)
+    } 
+}
 async function getCategoriesData(){
     try{
         const res = await fetch('https://mind-hub.up.railway.app/amazing')
@@ -34,17 +45,6 @@ async function getCategoriesData(){
     } catch(err){
         console.log(`Error. ${err}`)
     }
-}
-async function getData(query, gallery){
-    try{
-        const res = await fetch(`https://mind-hub.up.railway.app/amazing?${query}`)
-        const {events} = await res.json()
-        await getCategoriesData()
-        buildGallery(events, gallery)
-        filterGallery(events, gallery)
-    } catch(err){
-        console.log(`Error. ${err}`)
-    } 
 }
 function buildGallery(array, gallery){
     gallery.innerHTML = ""
@@ -72,7 +72,7 @@ function filterGallery(array, gallery){
     checkbox.forEach(el => el.addEventListener('change', e => {
         const selected = e.target.value.toLowerCase()
         const checked = e.target.checked
-        filterEvents = new filterManager(array, 'isChecked', selected, checked)
+        filterEvents = filterManager(array, 'isChecked', selected, checked)
         filterEvents.length === 0 ? gallery.innerHTML = `<h4 class="text-center text-light">No events match search</h4>` : buildGallery(filterEvents, gallery)
     }))
     search.addEventListener('click', e => {
