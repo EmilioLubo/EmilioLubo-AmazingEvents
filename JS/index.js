@@ -5,11 +5,11 @@ let filterEvents
 let applied = {}
 let checkedCat = []
 switch(location.pathname.split('/').pop()){
-    case '/index.html': getData('',indexGallery)
+    case 'index.html': getData('',indexGallery)
     break
-    case '/pages/upcoming.html': getData('time=upcoming&order=asc', upcomingGallery)
+    case 'upcoming.html': getData('time=upcoming&order=asc', upcomingGallery)
     break
-    case '/pages/past.html': getData('time=past&order=desc', pastGallery)
+    case 'past.html': getData('time=past&order=desc', pastGallery)
     break
 }
 async function getCategoriesData(){
