@@ -5,19 +5,15 @@ let filterEvents
 let applied = {}
 let checkedCat = []
 app(indexGallery, upcomingGallery, pastGallery)
-async function app(gallery1, gallery2, gallery3){
-    try{
-        switch(document.title){
-        case 'Amazing Events - Home': await getData('', gallery1)
-        break
-        case 'Amazing Events - Upcoming Events': await getData('time=upcoming&order=asc', gallery2)
-        break
-        case 'Amazing Events - Past Events': await getData('time=past&order=desc', gallery3)
-        break
-        } 
-    }catch(err){
-        console.log(`Error. ${err}`)
-    }
+function app(gallery1, gallery2, gallery3){
+    switch(document.title){
+    case 'Amazing Events - Home': getData('', gallery1)
+    break
+    case 'Amazing Events - Upcoming Events': getData('time=upcoming&order=asc', gallery2)
+    break
+    case 'Amazing Events - Past Events': getData('time=past&order=desc', gallery3)
+    break
+    } 
 }
 async function getData(query, gallery){
     try{
