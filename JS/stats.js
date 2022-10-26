@@ -1,12 +1,9 @@
 const statsTable = document.getElementById('statsTable')
 const upcomingTable = document.getElementById('upcomingTable')
 const pastTable = document.getElementById('pastTable')
-tableApp(statsTable, upcomingTable, pastTable)
-function tableApp(table1, table2, table3){
-    getStatsData(table1)
-    getStatsCatData('upcoming', 'estimate', table2)
-    getStatsCatData('past', 'assistance', table3)
-}
+getStatsData(statsTable)
+getStatsCatData('upcoming', 'estimate', upcomingTable)
+getStatsCatData('past', 'assistance', pastTable)
 async function getStatsData(table){
     try{
         const res = await fetch(`https://mind-hub.up.railway.app/amazing?time=past`)
