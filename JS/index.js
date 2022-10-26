@@ -1,30 +1,44 @@
-const {currentDate, events} = data
-events.forEach(e => e.date = new Date(e.date))
-const refDate = new Date(currentDate)
-const pastEvents = events.filter(e => e.date < refDate)
-const upcomingEvents = events.filter(e => e.date >= refDate)
-const categories = new Set(events.map(e => e.category).sort())
 const indexGallery = document.getElementById('indexGallery')
 const upcomingGallery = document.getElementById('upcomingGallery')
 const pastGallery = document.getElementById('pastGallery')
-const categoryContainer = document.getElementById('categoryContainer')
 let filterEvents
 let applied = {}
 let checkedCat = []
-categories.forEach(e => {
-    let label = document.createElement('label')
-    label.className = "form-check-label"
-    label.innerHTML = `<input class="form-check-input" type="checkbox" value="${e}">${e}`
-    categoryContainer.appendChild(label)
-})
-const checkbox = document.querySelectorAll('.form-check-input')
-const search = document.getElementById('search')
-indexGallery ? buildGallery(events, indexGallery) : null
-indexGallery ? filterGallery(events, indexGallery) : null
-pastGallery ? buildGallery(pastEvents, pastGallery) : null
-pastGallery ? filterGallery(pastEvents, pastGallery) : null
-upcomingGallery ? buildGallery(upcomingEvents, upcomingGallery) : null
-upcomingGallery ? filterGallery(upcomingEvents, upcomingGallery) : null
+switch(document.title){
+case 'Amazing Events - Home': getData('', indexGallery)
+break
+case 'Amazing Events - Upcoming Events': getData('time=upcoming&order=asc', upcomingGallery)
+break
+case 'Amazing Events - Past Events': getData('time=past&order=desc', pastGallery)
+break
+}
+async function getData(query, gallery){
+    try{
+        const res = await fetch(`https://mind-hub.up.railway.app/amazing?${query}`)
+        const {events} = await res.json()
+        await getCategoriesData()
+        buildGallery(events, gallery)
+        filterGallery(events, gallery)
+    } catch(err){
+        console.log(`Error. ${err}`)
+    } 
+}
+async function getCategoriesData(){
+    try{
+        const res = await fetch('https://mind-hub.up.railway.app/amazing')
+        const {events} = await res.json()
+        const categories = new Set(events.map(e => e.category).sort())
+        const categoryContainer = document.getElementById('categoryContainer')
+        categories.forEach(e => {
+            let label = document.createElement('label')
+            label.className = "form-check-label"
+            label.innerHTML = `<input class="form-check-input" type="checkbox" value="${e}">${e}`
+            categoryContainer.appendChild(label)
+        })
+    } catch(err){
+        console.log(`Error. ${err}`)
+    }
+}
 function buildGallery(array, gallery){
     gallery.innerHTML = ""
     array.forEach(ev => {
@@ -39,17 +53,19 @@ function buildGallery(array, gallery){
         </div>
         <div class="d-flex justify-content-between align-items-baseline">
         <p>Price: $ ${ev.price}</p>
-        <a href="${(location.pathname.split('/').pop()) === 'index.html' ? './pages/details.html?id=' : './details.html?id='}${ev._id}" 
-            class="btn details__button bg-dark text-light">view details...</a>
+        <a href="${document.title === 'Amazing Events - Home' ? './pages/details.html?id=' : './details.html?id='}${ev.id}" 
+        class="btn details__button bg-dark text-light">view details...</a>
         </div>`
         gallery.appendChild(card)
     })
 }
 function filterGallery(array, gallery){
+    const checkbox = document.querySelectorAll('.form-check-input')
+    const search = document.getElementById('search')
     checkbox.forEach(el => el.addEventListener('change', e => {
         const selected = e.target.value.toLowerCase()
         const checked = e.target.checked
-        filterEvents = new filterManager(array, 'isChecked', selected, checked)
+        filterEvents = filterManager(array, 'isChecked', selected, checked)
         filterEvents.length === 0 ? gallery.innerHTML = `<h4 class="text-center text-light">No events match search</h4>` : buildGallery(filterEvents, gallery)
     }))
     search.addEventListener('click', e => {
